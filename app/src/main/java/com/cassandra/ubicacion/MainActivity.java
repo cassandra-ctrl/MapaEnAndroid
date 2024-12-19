@@ -18,7 +18,7 @@ import com.google.android.gms.location.LocationServices;
 
 public class MainActivity extends AppCompatActivity {
 
-    //cliente de proveedor de ubicacion
+    //cliente de proveedor de ubicacion coordinada
     private FusedLocationProviderClient fusedLocationProviderClient;
     private TextView locationTv;
     //
@@ -40,7 +40,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getCurrentLocation(){
-        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_DENIED && ActivityCompat.checkSelfPermission(this,Manifest.permission.ACCESS_COARSE_LOCATION)!= PackageManager.PERMISSION_DENIED){
+        //verificamos los permisos
+        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,Manifest.permission.ACCESS_COARSE_LOCATION)!= PackageManager.PERMISSION_GRANTED){
             //sino tenemos este permiso, entonces lo solicitamos
             ActivityCompat.requestPermissions(
                     this,
@@ -52,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         //trae la ultima posicion guardada
         fusedLocationProviderClient.getLastLocation().addOnSuccessListener(this, location -> {
             if(location != null){
+                //si trae informacion del dispositivo
                 locationTv.setText(
                         "Latitud: " + location.getLatitude() + "\n" +
                                 "Longuitud: "+ location.getLongitude()
@@ -69,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if(requestCode == REQUEST_CODE_LOCATION_PERMISSION && grantResults.length > 0){
             if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                //el permiso fue concedido
                 getCurrentLocation();
             }else{
                 locationTv.setText("Permiso de ubicacion denegado");
