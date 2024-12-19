@@ -2,10 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Always include this permission -->
+
+    <!--Permite a una aplicacion acceder a la ubicacion aprox -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
-    <!-- Include only if your app benefits from precise location access. -->
+    <!-- Permite a la app obtener la ubicacion precisa -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application

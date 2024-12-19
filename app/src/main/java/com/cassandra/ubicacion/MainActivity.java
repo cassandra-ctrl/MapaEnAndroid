@@ -21,22 +21,23 @@ public class MainActivity extends AppCompatActivity {
     //cliente de proveedor de ubicacion coordinada
     private FusedLocationProviderClient fusedLocationProviderClient;
     private TextView locationTv;
-    //
+
     private static final int REQUEST_CODE_LOCATION_PERMISSION =1;
 
+    //se obtienen los permisos
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+
+        super.onCreate(savedInstanceState); //contiene el estado guardado de la actividad
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main); //parte de la interfaz de usuario
 
+        //asocia locacion a la interfaz
         locationTv = findViewById(R.id.locationTv);
+        //Inicializa un cliente para obtener ubicaciones utilizando geolocalizacion de google
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-
         //verificamos si tenemos los permisos,sino los tenemos los solicitamos
         getCurrentLocation();
-
-
     }
 
     private void getCurrentLocation(){
@@ -50,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
             );
             return;
         }
+
         //trae la ultima posicion guardada
         fusedLocationProviderClient.getLastLocation().addOnSuccessListener(this, location -> {
             if(location != null){
@@ -65,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    //Respuesta de los permisos, validacion
+    //Respuesta cuando el usuario valida o deniega los permisos
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults){
 
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
